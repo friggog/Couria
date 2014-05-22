@@ -1,10 +1,10 @@
-Package: me.chewitt.couria
+Package: me.qusic.couria
 Name: Couria
 Version: 0.6~beta4-1M
 Description: Centralized Quick Reply System
 Section: Tweaks
 Depends: firmware (>= 6.0), mobilesubstrate, preferenceloader
-Conflicts: com.a3tweaks.flipswitch (<= 1.0.2), me.qusic.couria
+Conflicts: com.a3tweaks.flipswitch (<= 1.0.2)
 Priority: optional
 Architecture: iphoneos-arm
 Author: Qusic <QusicS@Me.com>
