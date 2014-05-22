@@ -1,5 +1,6 @@
 #Couria
 Centralized and Customizable Quick Reply and Quick Compose System for iOS
+Modifier by Charlie Hewitt to support _UIBackdropView - originally by Qusic
 
 ## How to make extensions
 - [Couria.h](https://github.com/Qusic/Couria/blob/master/Couria.h)

@@ -38,5 +38,8 @@
 - (UIColor *)contactIdentifierColor;
 - (UIImage *)passcodeFieldBackgroundImage;
 - (UIColor *)passcodeFieldTextColor;
+- (NSInteger) backdropViewStyle;
+-(UIColor*) backdropColor;
+-(BOOL) isUsingBackdrop;
 
 @end

@@ -20,7 +20,10 @@
     if (self) {
         _textView = iOS7() ? (UITextView *)[[JTSTextView alloc]initWithFrame:CGRectMake(1, 3, frame.size.width-5, frame.size.height-10)] : [[UITextView alloc]initWithFrame:CGRectMake(1, 3, frame.size.width-2, frame.size.height-10)];
         _textView.delegate = delegate;
-        _textView.backgroundColor = theme.fieldBackgroundColor;
+        if(theme.isUsingBackdrop)
+            _textView.backgroundColor = [UIColor clearColor];
+        else
+            _textView.backgroundColor = theme.fieldBackgroundColor;
         _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _textView.font = [UIFont systemFontOfSize:16];
         _textView.textColor = theme.fieldTextColor;
@@ -32,10 +35,21 @@
             _textView.textContainerInset = UIEdgeInsetsMake(13, 4, 0, 4);
             _textView.text = nil;
         }
-        CouriaImageView *backgroundView = [CouriaImageView imageViewWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        backgroundView.image = theme.fieldBackgroundImage;
-        backgroundView.backgroundColor = [UIColor clearColor];
-        backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        CouriaImageView *backgroundView = nil;
+        if(theme.isUsingBackdrop){
+            backgroundView = [CouriaImageView imageViewWithFrame:CGRectMake(1, 5, frame.size.width-5, frame.size.height-10)];
+            backgroundView.image = theme.fieldBackgroundImage;
+            backgroundView.backgroundColor = theme.fieldBackgroundColor;
+            backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            backgroundView.layer.masksToBounds = YES;
+            backgroundView.layer.cornerRadius = 4;
+        }
+        else {
+            backgroundView = [CouriaImageView imageViewWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+            backgroundView.image = theme.fieldBackgroundImage;
+            backgroundView.backgroundColor = [UIColor clearColor];
+            backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        }
         self.backgroundColor = [UIColor clearColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:_textView];

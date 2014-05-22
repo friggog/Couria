@@ -1,17 +1,16 @@
-Package: me.qusic.couria
+Package: me.chewitt.couria
 Name: Couria
-Version: 0.6~beta4-1
+Version: 0.6~beta4-1M
 Description: Centralized Quick Reply System
 Section: Tweaks
-Installed-Size: 0
 Depends: firmware (>= 6.0), mobilesubstrate, preferenceloader
-Conflicts: com.a3tweaks.flipswitch (<= 1.0.2)
+Conflicts: com.a3tweaks.flipswitch (<= 1.0.2), me.qusic.couria
 Priority: optional
 Architecture: iphoneos-arm
 Author: Qusic <QusicS@Me.com>
-Maintainer: Qusic <QusicS@Me.com>
+Maintainer: Charlie Hewitt <contact@chewitt.me>
 Sponsor: Qusic.me <http://Qusic.me>
 Homepage: http://Qusic.me/Couria
 Icon: file:///Library/PreferenceBundles/CouriaPreferences.bundle/Couria.png
-Depiction: http://Cydia.Qusic.me/htmls/couria.html
+Depiction: http://chewitt.me/repo/depictions/couria
 Tag: purpose::extension

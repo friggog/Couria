@@ -92,6 +92,13 @@
                                                                 edit:Nil];
         [twitter setIdentifier:@"Twitter"];
         twitter->action = @selector(doActionForSpecifier:);
+        PSSpecifier *chewitt = [PSSpecifier preferenceSpecifierNamed:@"Modified by Charlie Hewitt"
+                                                              target:self set:NULL get:NULL
+                                                              detail:Nil
+                                                                cell:PSButtonCell
+                                                                edit:Nil];
+        [chewitt setIdentifier:@"Chewitt"];
+        chewitt->action = @selector(doActionForSpecifier:);
         PSSpecifier *donate = [PSSpecifier preferenceSpecifierNamed:CouriaLocalizedString(@"DONATE")
                                                              target:self set:NULL get:NULL
                                                              detail:Nil
@@ -106,7 +113,7 @@
                                                                            edit:Nil];
         [translationCredits setIdentifier:@"TranslationCredits"];
         translationCredits->action = @selector(doActionForSpecifier:);
-        [specifiers addObjectsFromArray:@[about, twitter, donate, translationCredits]];
+        [specifiers addObjectsFromArray:@[about, twitter, chewitt, donate, translationCredits]];
 
         _specifiers = specifiers;
     }
@@ -124,6 +131,9 @@
     NSString *identifier = specifier.identifier;
     if ([identifier isEqualToString:@"Twitter"]) {
         [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://twitter.com/QusicS"]];
+    }
+    else if([identifier isEqualToString:@"Chewitt"]) {
+            [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://twitter.com/friggog"]];
     } else if ([identifier isEqualToString:@"Donate"]) {
         [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PJ93RW7TLKZZ4"]];
     } else if ([identifier isEqualToString:@"TranslationCredits"]) {

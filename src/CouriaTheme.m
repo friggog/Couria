@@ -239,4 +239,17 @@
     return [self colorNamed:@"PasscodeFieldTextColor"];
 }
 
+-(NSInteger) backdropViewStyle {
+    int s = [[_themeProperty valueForKey:@"BackdropStyle"] integerValue];
+    return (NSInteger)s;
+}
+
+-(UIColor*) backdropColor {
+    return [self colorNamed:@"BackdropColor"];
+}
+
+-(BOOL) isUsingBackdrop {
+    return [_themeProperty valueForKey:@"BackdropStyle"]!=nil;
+}
+
 @end

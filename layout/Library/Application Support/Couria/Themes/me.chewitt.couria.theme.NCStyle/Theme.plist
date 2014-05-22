@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ThemeName</key>
+	<string>Notification Centre Style</string>
+	<key>TitleColor</key>
+	<string>FFFFFF</string>
+	<key>TitleShadowColor</key>
+	<string>00000000</string>
+	<key>ButtonTitleNormalColor</key>
+	<string>FFFFFF</string>
+	<key>ButtonTitleHighlightedColor</key>
+	<string>FFFFFF</string>
+	<key>ButtonTitleShadowNormalColor</key>
+	<string>00000000</string>
+	<key>ButtonTitleShadowHighlightedColor</key>
+	<string>00000000</string>
+	<key>FieldBackgroundColor</key>
+	<string>00000033</string>
+	<key>FieldTextColor</key>
+	<string>FFFFFF</string>
+	<key>SendButtonTitleNormalColor</key>
+	<string>007AFF</string>
+	<key>SendButtonTitleHighlightedColor</key>
+	<string>007AFF99</string>
+	<key>SendButtonTitleShadowNormalColor</key>
+	<string>00000000</string>
+	<key>SendButtonTitleShadowHighlightedColor</key>
+	<string>00000000</string>
+	<key>OutgoingMessageColor</key>
+	<string>FFFFFF</string>
+	<key>IncomingMessageColor</key>
+	<string>000000</string>
+	<key>TimestampColor</key>
+	<string>FFFFFF</string>
+	<key>TimestampShadowColor</key>
+	<string>00000000</string>
+	<key>ContactNicknameColor</key>
+	<string>FFFFFF</string>
+	<key>ContactIdentifierColor</key>
+	<string>FFFFFF</string>
+	<key>PasscodeFieldTextColor</key>
+	<string>FFFFFF</string>
+	<key>BackdropStyle</key>
+	<integer>2030</integer>
+</dict>
+</plist>

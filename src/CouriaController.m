@@ -126,8 +126,10 @@
     [_mainView addSubview:_messagesView];
     [_mainView addSubview:_topbarView];
     [_mainView addSubview:_bottombarView];
-    [_shadowLayer addSublayer:_borderLayer];
-    [_shadowView.layer addSublayer:_shadowLayer];
+    if(!_theme.isUsingBackdrop){
+        [_shadowLayer addSublayer:_borderLayer];
+        [_shadowView.layer addSublayer:_shadowLayer];
+    }
     [_shadowView addSubview:_mainView];
 
     if (CouriaCanSendPhoto(_applicationIdentifier) || CouriaCanSendMovie(_applicationIdentifier)) {

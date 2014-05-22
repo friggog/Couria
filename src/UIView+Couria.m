@@ -9,12 +9,23 @@
 + (UIView *)mainViewWithFrame:(CGRect)frame cornerRadius:(CGFloat)cornerRadius theme:(CouriaTheme *)theme
 {
     CouriaImageView *view = [CouriaImageView imageViewWithFrame:frame];
-    view.image = theme.mainBackgroundImage;
+    if(!theme.isUsingBackdrop){
+        view.image = theme.mainBackgroundImage;
+    }
     view.backgroundColor = [UIColor clearColor];
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     view.userInteractionEnabled = YES;
     view.layer.cornerRadius = cornerRadius;
     view.layer.masksToBounds = YES;
+    
+    if(theme.isUsingBackdrop){
+        _UIBackdropViewSettings * s = [_UIBackdropViewSettings settingsForStyle:theme.backdropViewStyle];
+        if(theme.backdropColor)
+            s.colorTint = theme.backdropColor;
+        _UIBackdropView * bd = [[_UIBackdropView alloc] initWithFrame:frame autosizesToFitSuperview:YES settings:s];
+        [view addSubview:bd];
+    }
+    
     return view;
 }
 

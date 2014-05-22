@@ -19,7 +19,7 @@
 #define RequirePasscodeWhenLockedKey @"RequirePasscodeWhenLocked"
 #define RequirePasscodeWhenUnlockedKey @"RequirePasscodeWhenUnlocked"
 
-#define iOS7() (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0)
+#define iOS7() ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
 #pragma mark - Couria
 
@@ -355,7 +355,7 @@ extern "C" {
 @interface UIApplication (Private)
 - (BOOL)launchApplicationWithIdentifier:(NSString *)identifier suspended:(BOOL)suspended;
 @end
-
+/*
 @interface UIAlertView (Private)
 - (void)popupAlertAnimated:(BOOL)animated;
 - (void)dismissAnimated:(BOOL)animated;
@@ -370,7 +370,7 @@ extern "C" {
 - (BOOL)_needsKeyboard;
 - (BOOL)requiresPortraitOrientation;
 @end
-
+*/
 @interface UITextEffectsWindow : UIWindow
 + (UITextEffectsWindow *)sharedTextEffectsWindow;
 @end
@@ -766,4 +766,15 @@ typedef enum PSCellType {
 	NSMutableArray *notifications;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+@end
+
+#pragma mark - _UIBackdropView
+
+@interface _UIBackdropViewSettings : NSObject {}
++ (id)settingsForStyle:(int)arg1;
+@property (nonatomic,retain) UIColor * colorTint;
+@end
+
+@interface _UIBackdropView : UIView {}
+- (id)initWithFrame:(CGRect)arg1 autosizesToFitSuperview:(BOOL)arg2 settings:(id)arg3;
 @end
