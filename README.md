@@ -10,8 +10,8 @@ Modified by Charlie Hewitt to support _UIBackdropView - originally by Qusic
 
 ## How to make themes
 - [CouriaTheme.m](https://github.com/friggog/Couria/blob/master/src/CouriaTheme.m)
-- [Default Theme](https://github.com/Qusic/friggog/tree/master/layout/Library/Application%20Support/Couria/Themes/me.qusic.couria.theme.default)
-- [Default7 Theme](https://github.com/Qusic/friggog/tree/master/layout/Library/Application%20Support/Couria/Themes/me.qusic.couria.theme.default7)
+- [Default Theme](https://github.com/friggog/Couria/tree/master/layout/Library/Application%20Support/Couria/Themes/me.qusic.couria.theme.default)
+- [Default7 Theme](https://github.com/friggog/Couria/tree/master/layout/Library/Application%20Support/Couria/Themes/me.qusic.couria.theme.default7)
 - [Control Center Theme](https://github.com/friggog/Couria/tree/master/layout/Library/Application%20Support/Couria/Themes/me.chewitt.couria.theme.CCStyle)
 - [Notification Center Theme](https://github.com/friggog/Couria/tree/master/layout/Library/Application%20Support/Couria/Themes/me.chewitt.couria.theme.NCStyle)
 - [Alert Theme](https://github.com/friggog/Couria/tree/master/layout/Library/Application%20Support/Couria/Themes/me.chewitt.couria.theme.LightStyle)
