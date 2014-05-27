@@ -30,7 +30,8 @@ NSArray *CouriaPreferencesGetThemes(void)
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *themeURLs = [fileManager contentsOfDirectoryAtURL:[NSURL fileURLWithPath:ThemesDirectoryPath] includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsPackageDescendants|NSDirectoryEnumerationSkipsHiddenFiles error:nil];
     for (NSURL *themeURL in themeURLs) {
-        [themeIdentifiers addObject:themeURL.lastPathComponent];
+        if(!(!iOS7() && CouriaPreferencesGetThemeRequiresIOS7(themeURL.lastPathComponent)))
+            [themeIdentifiers addObject:themeURL.lastPathComponent];
     }
     return themeIdentifiers;
 }
@@ -55,4 +56,10 @@ NSString *CouriaPreferencesGetThemeDisplayName(NSString *theme)
         displayName = theme;
     }
     return displayName;
+}
+
+BOOL CouriaPreferencesGetThemeRequiresIOS7(NSString *theme)
+{
+    BOOL needs7 = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/%@/%@", ThemesDirectoryPath, theme, @"Theme.plist"]][@"BackdropStyle"] != nil;
+    return needs7;
 }

@@ -77,6 +77,7 @@ extern "C" {
     NSArray *CouriaPreferencesGetThemes(void);
     NSString *CouriaPreferencesGetExtensionDisplayName(NSString *extension);
     NSString *CouriaPreferencesGetThemeDisplayName(NSString *theme);
+    BOOL CouriaPreferencesGetThemeRequiresIOS7(NSString *theme);
 #ifdef __cplusplus
 }
 #endif
