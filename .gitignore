@@ -1,3 +1,10 @@
 .theos
 .DS_Store
+*.swp
 *.deb
+
+src/Headers.h
+
+src/Headers.h
+
+layout/DEBIAN/control

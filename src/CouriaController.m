@@ -19,6 +19,7 @@
 @property(retain) NSString *applicationIdentifier;
 @property(retain) NSString *userIdentifier;
 @property(retain) CouriaTheme *theme;
+@property(assign) CGFloat textSize;
 @property(retain) NSString *passcode;
 @property(copy) void (^dismissHandler)(void);
 
@@ -63,6 +64,8 @@
         _applicationIdentifier = applicationIdentifier;
         _userIdentifier = userIdentifier;
         _theme = [CouriaTheme themeWithIdentifier:CouriaGetUserDefaultForKey(applicationIdentifier, ThemeKey)];
+        _textSize = [CouriaGetUserDefaultForKey(applicationIdentifier, TextSizeKey)floatValue];
+        _textSize = _textSize >= 14 ? _textSize : 14;
         if ([CouriaGetUserDefaultForKey(_applicationIdentifier, (iOS7() ? ((SBLockScreenManager *)[NSClassFromString(@"SBLockScreenManager")sharedInstance]).isUILocked : [NSClassFromString(@"SBAwayController")sharedAwayController].isLocked) ? RequirePasscodeWhenLockedKey : RequirePasscodeWhenUnlockedKey)boolValue]) {
             _passcode = CouriaGetUserDefaultForKey(_applicationIdentifier, PasscodeKey);
         }
@@ -95,7 +98,7 @@
     _mainView = [UIView mainViewWithFrame:CGRectMake(0, 0, 300, 250) cornerRadius:4 theme:_theme];
     _topbarView = [UIView topbarViewViewWithFrame:CGRectMake(0, 0, 300, 44) theme:_theme];
     _bottombarView = [UIView bottombarViewWithFrame:CGRectMake(0, 210, 300, 40) theme:_theme];
-    _messagesView = [[CouriaMessagesView alloc]initWithFrame:CGRectMake(0, 44, 300, 166) delegate:self theme:_theme];
+    _messagesView = [[CouriaMessagesView alloc]initWithFrame:CGRectMake(0, 44, 300, 166) delegate:self theme:_theme textSize:_textSize];
     [_messagesView setApplication:_applicationIdentifier user:_userIdentifier];
 
     _applicationButton = [UIView buttonWithApplicationIcon:_applicationIdentifier];
@@ -105,6 +108,8 @@
     _titleLabel = [UIView titleLabelWithTheme:_theme title:CouriaGetNickname(_applicationIdentifier, _userIdentifier)];
     _titleLabel.frame = CGRectMake(74, 7, 152, 30);
     _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+    _titleLabel.adjustsFontSizeToFitWidth = YES;
+    _titleLabel.minimumScaleFactor = 0.6;
     _closeButton = [UIView buttonWithTheme:_theme title:CouriaLocalizedString(@"CLOSE")];
     _closeButton.frame = CGRectMake(233, 7, 60, 30);
     _closeButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
@@ -207,6 +212,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardFrameChanged:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(newBulletinPublished:) name:@NewBulletinPublishedNotification object:nil];
     [_alert.display addSubview:self.view];
+    [self performSelector:@selector(keyboardFrameChanged:) withObject:nil afterDelay:0.1];
 }
 
 - (void)dismiss
@@ -243,6 +249,17 @@
             [[NSClassFromString(@"SBStatusBarDataManager")sharedDataManager]resetData];
         }
     }];
+}
+
+- (void)saveDraft
+{
+    CouriaSetUserDataForKey([NSString stringWithFormat:@"Draft-%@-%@", _applicationIdentifier, _userIdentifier], _fieldView.textView.text);
+}
+
+- (void)loadDraft
+{
+    _fieldView.textView.text = CouriaGetUserDataForKey([NSString stringWithFormat:@"Draft-%@-%@", _applicationIdentifier, _userIdentifier]);
+    [self textViewDidChange:_fieldView.textView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -287,13 +304,12 @@
         } completion:^(BOOL finished) {
             [_fieldView.textView becomeFirstResponder];
         }];
-        [_messagesView refreshData];
-        CouriaMarkRead(_applicationIdentifier, _userIdentifier);
     } else {
         [_fieldView.textView becomeFirstResponder];
-        [_messagesView refreshData];
-        CouriaMarkRead(_applicationIdentifier, _userIdentifier);
     }
+    [_messagesView refreshData];
+    [self loadDraft];
+    CouriaMarkRead(_applicationIdentifier, _userIdentifier);
 }
 
 - (void)showContactsView:(BOOL)animated
@@ -388,6 +404,7 @@
 
 - (void)keyboardFrameChanged:(NSNotification *)notification
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(keyboardFrameChanged:) object:nil];    
     UIInterfaceOrientation orientation = [UIScreen mainScreen].frontMostAppOrientation;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && UIInterfaceOrientationIsLandscape(orientation)) {
         self.view.transform = CGAffineTransformMakeRotation(orientation == UIInterfaceOrientationLandscapeLeft ? -M_PI_2 : M_PI_2);
@@ -400,7 +417,7 @@
     CGFloat yMargin = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? 10 : 50;
     CGFloat topMargin = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && UIInterfaceOrientationIsLandscape(orientation)) ? 0 : 10;
     CGSize viewSize = [UIScreen mainScreen].viewFrame.size;
-    CGSize keyboardSize = [notification.userInfo[UIKeyboardFrameEndUserInfoKey]CGRectValue].size;
+    CGSize keyboardSize = notification ? [notification.userInfo[UIKeyboardFrameEndUserInfoKey]CGRectValue].size : CGSizeZero;
     CGFloat keyboardHeight = [notification.name isEqualToString:UIKeyboardWillHideNotification] ? 0 : (UIInterfaceOrientationIsPortrait(orientation) ? keyboardSize.height : keyboardSize.width);
     CGFloat width = viewSize.width - xMargin * 2;
     CGFloat height = viewSize.height - yMargin * 2 - topMargin - keyboardHeight;
@@ -494,6 +511,7 @@
 
 - (void)closeButtonAction:(UIButton *)button
 {
+    [self saveDraft];
     [self dismiss];
 }
 
@@ -667,6 +685,7 @@
 
 - (void)contactsView:(CouriaContactsView *)contactsView didSelectContact:(NSString *)userIdentifier
 {
+    [self saveDraft];
     _userIdentifier = userIdentifier;
     [_titleLabel setText:CouriaGetNickname(_applicationIdentifier, userIdentifier)];
     [_messagesView setApplication:_applicationIdentifier user:userIdentifier];
