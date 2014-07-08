@@ -19,9 +19,8 @@ CouriaPreferences_FRAMEWORKS = UIKit Social
 CouriaPreferences_PRIVATE_FRAMEWORKS = Preferences AppSupport
 CouriaPreferences_INSTALL_PATH = /Library/PreferenceBundles
 
-export TARGET=iphone:clang
-export ARCHS = armv7 armv7s arm64
-export TARGET_IPHONEOS_DEPLOYMENT_VERSION = 6.0
+ARCHS = armv7s armv7 arm64
+TARGET = iPhone:7.1
 export ADDITIONAL_OBJCFLAGS = -fobjc-arc -fvisibility=hidden
 
 include theos/makefiles/common.mk
