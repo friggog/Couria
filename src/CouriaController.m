@@ -542,6 +542,8 @@
     message.media = media;
     message.outgoing = YES;
     CouriaSendMessage(_applicationIdentifier, _userIdentifier, message);
+    _fieldView.textView.text = @"";
+    [self saveDraft];
     [self dismiss];
 }
 
